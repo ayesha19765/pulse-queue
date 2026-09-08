@@ -7,14 +7,16 @@ public class Job {
 
     private UUID id;
     private String name;
+    private JobPriority priority;
     private JobStatus status;
     private Instant createdAt;
 
-    public Job(UUID id, String name, JobStatus status, Instant createdAt) {
-        this.id = id;
+    public Job(String name, JobPriority priority) {
+        this.id = UUID.randomUUID();
         this.name = name;
-        this.status = status;
-        this.createdAt = createdAt;
+        this.priority = priority;
+        this.status = JobStatus.QUEUED;
+        this.createdAt = Instant.now();
     }
 
     public UUID getId() {
@@ -25,6 +27,10 @@ public class Job {
         return name;
     }
 
+    public JobPriority getPriority() {
+        return priority;
+    }
+
     public JobStatus getStatus() {
         return status;
     }
@@ -33,4 +39,3 @@ public class Job {
         return createdAt;
     }
 }
-
