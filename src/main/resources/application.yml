@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: pulse-queue
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pulsequeue
+    username: pulsequeue
+    password: pulsequeue
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
