@@ -19,6 +19,18 @@ public class Job {
         this.createdAt = Instant.now();
     }
 
+    public void transitionTo(JobStatus newStatus) {
+        if (this.status == JobStatus.QUEUED && newStatus == JobStatus.RUNNING) {
+            this.status = newStatus;
+        } else if (this.status == JobStatus.RUNNING && (newStatus == JobStatus.COMPLETED || newStatus == JobStatus.FAILED)) {
+            this.status = newStatus;
+        } else {
+            throw new InvalidJobStateTransitionException(
+                "Cannot transition from " + this.status + " to " + newStatus
+            );
+        }
+    }
+
     public UUID getId() {
         return id;
     }
