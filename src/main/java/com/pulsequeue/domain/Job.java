@@ -19,6 +19,24 @@ public class Job {
         this.createdAt = Instant.now();
     }
 
+    private Job(UUID id, String name, JobPriority priority, JobStatus status, Instant createdAt) {
+        this.id = id;
+        this.name = name;
+        this.priority = priority;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
+    public static Job rehydrate(
+        UUID id,
+        String name,
+        JobPriority priority,
+        JobStatus status,
+        Instant createdAt
+    ) {
+        return new Job(id, name, priority, status, createdAt);
+    }
+
     public void transitionTo(JobStatus newStatus) {
         if (this.status == JobStatus.QUEUED && newStatus == JobStatus.RUNNING) {
             this.status = newStatus;
