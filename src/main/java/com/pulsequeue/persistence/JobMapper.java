@@ -20,5 +20,19 @@ public final class JobMapper {
         entity.setCreatedAt(job.getCreatedAt());
         return entity;
     }
+
+    public static Job toDomain(JobEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+
+        return Job.rehydrate(
+            entity.getId(),
+            entity.getName(),
+            entity.getPriority(),
+            entity.getStatus(),
+            entity.getCreatedAt()
+        );
+    }
 }
 
