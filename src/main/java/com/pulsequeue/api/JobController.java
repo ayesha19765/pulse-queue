@@ -2,7 +2,6 @@ package com.pulsequeue.api;
 
 import com.pulsequeue.application.JobService;
 import com.pulsequeue.domain.Job;
-import com.pulsequeue.persistence.JobRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +18,9 @@ import java.util.UUID;
 public class JobController {
 
     private final JobService jobService;
-    private final JobRepository jobRepository;
 
-    public JobController(JobService jobService, JobRepository jobRepository) {
+    public JobController(JobService jobService) {
         this.jobService = jobService;
-        this.jobRepository = jobRepository;
     }
 
     @PostMapping
@@ -41,7 +38,7 @@ public class JobController {
 
     @GetMapping("/{id}")
     public ResponseEntity<JobResponse> getJobById(@PathVariable UUID id) {
-        return jobRepository.findById(id)
+        return jobService.findJob(id)
                 .map(job -> new JobResponse(
                         job.getId(),
                         job.getName(),

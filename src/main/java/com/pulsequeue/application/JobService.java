@@ -5,6 +5,9 @@ import com.pulsequeue.domain.JobPriority;
 import com.pulsequeue.persistence.JobRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class JobService {
 
@@ -18,5 +21,8 @@ public class JobService {
         Job job = new Job(name, priority);
         return jobRepository.save(job);
     }
-}
 
+    public Optional<Job> findJob(UUID id) {
+        return jobRepository.findById(id);
+    }
+}
