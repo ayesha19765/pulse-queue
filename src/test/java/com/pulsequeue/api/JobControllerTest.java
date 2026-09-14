@@ -37,5 +37,34 @@ class JobControllerTest {
                 .andExpect(jsonPath("$.status").value("QUEUED"))
                 .andExpect(jsonPath("$.createdAt").isNotEmpty());
     }
-}
 
+    @Test
+    void rejectsBlankName() throws Exception {
+        String requestJson = """
+                {
+                  "name": "",
+                  "priority": "HIGH"
+                }
+                """;
+
+        mockMvc.perform(post("/jobs")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void rejectsNullPriority() throws Exception {
+        String requestJson = """
+                {
+                  "name": "test-job",
+                  "priority": null
+                }
+                """;
+
+        mockMvc.perform(post("/jobs")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isBadRequest());
+    }
+}
