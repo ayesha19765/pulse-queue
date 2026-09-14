@@ -2,6 +2,7 @@ package com.pulsequeue.api;
 
 import com.pulsequeue.application.JobService;
 import com.pulsequeue.domain.Job;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ public class JobController {
     }
 
     @PostMapping
-    public ResponseEntity<JobResponse> createJob(@RequestBody CreateJobRequest request) {
+    public ResponseEntity<JobResponse> createJob(@Valid @RequestBody CreateJobRequest request) {
         Job job = jobService.createJob(request.getName(), request.getPriority());
         JobResponse response = new JobResponse(
                 job.getId(),
