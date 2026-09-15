@@ -50,7 +50,9 @@ class JobControllerTest {
         mockMvc.perform(post("/jobs")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.message").value("Invalid request"));
     }
 
     @Test
@@ -65,6 +67,8 @@ class JobControllerTest {
         mockMvc.perform(post("/jobs")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.message").value("Invalid request"));
     }
 }
