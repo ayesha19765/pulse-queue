@@ -2,6 +2,7 @@ package com.pulsequeue.application;
 
 import com.pulsequeue.domain.Job;
 import com.pulsequeue.domain.JobPriority;
+import com.pulsequeue.domain.JobStatus;
 import com.pulsequeue.persistence.JobRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,12 @@ public class JobService {
 
     public Optional<Job> findJob(UUID id) {
         return jobRepository.findById(id);
+    }
+
+    public Job startJob(UUID id) {
+        Job job = jobRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Job not found: " + id));
+        job.transitionTo(JobStatus.RUNNING);
+        return jobRepository.save(job);
     }
 }
